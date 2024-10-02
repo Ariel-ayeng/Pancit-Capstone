@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -171,14 +172,20 @@ class AdminController extends Controller
             return redirect()->route('admin.categories')->with('status','Record has been updated successfully !');
         }
 
-    public function category_delete($id) 
-    {
-        $category = Category::find($id);
-        if (File::exists(public_path('uploads/categories').'/'.$category->image))
+        public function category_delete($id) 
         {
-            File::delete(public_path('uploads/categories').'/'.$category->image);
+            $category = Category::find($id);
+            if (File::exists(public_path('uploads/categories').'/'.$category->image))
+            {
+                File::delete(public_path('uploads/categories').'/'.$category->image);
+            }
+            $category->delete();
+            return redirect()->route('admin.categories')->with('status','Category has been deleted successfully');
         }
-        $category->delete();
-        return redirect()->route('admin.categories')->with('status','Category has been deleted successfully');
-    }
+
+        public function products()
+        {
+            $products = Product::orderBy('created_at','DESC')->paginate(10);
+            return view('admin.products',compact('products'));
+        }
 }
