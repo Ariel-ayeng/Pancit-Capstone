@@ -15,7 +15,7 @@
                     <i class="icon-chevron-right"></i>
                 </li>
                 <li>
-                    <div class="text-tiny">Categories </div>
+                    <div class="text-tiny">Categoriess </div>
                 </li>
             </ul>
         </div>
